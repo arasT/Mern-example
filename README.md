@@ -38,7 +38,7 @@ npm install
 npm start
 ```
 Finaly, run the **frontend** server.
-Install all needed packages for (folder from another terminal, go into the *"front"*), then run it:
+Install all needed packages for (from another terminal, go into *"front"* folder), then run it:
 ```
 cd ./front
 npm install
