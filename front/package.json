@@ -1,0 +1,46 @@
+{
+  "name": "carGarage-front",
+  "version": "0.1.0",
+  "description": "Car garage app, React frontend",
+  "keywords": [
+    "React",
+    "MERN",
+    "Express",
+    "MongoDB",
+    "frontend",
+    "example"
+  ],
+  "author": "Tsara",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "bootstrap": "^3.4.1",
+    "jquery": "^3.4.0",
+    "popper.js": "^1.15.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-notification-system": "^0.2.17",
+    "react-redux": "^7.0.2",
+    "react-scripts": "2.1.8",
+    "redux": "^4.0.1",
+    "redux-thunk": "^2.3.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "devDependencies": {
+    "uuid": "^3.3.2"
+  }
+}
