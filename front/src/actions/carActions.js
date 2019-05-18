@@ -18,18 +18,49 @@ export function addCar(payload) {
 
   return (dispatch) => { dispatch(fetchAllCars(null)) };
 };
-export function saveCarToDb(newCar) {
+export function saveCarToDb(newCar, carImage) {
   return (dispatch) => {
     return axios.post(burl + '/api/cars', newCar)
-                .then (res => {
-                  //dispatch(addCar({ newCar : res.data, error : null }));
+          .then (res => {
+            const newCarFromDb = res.data;
+            //dispatch(addCar({ newCar : res.data, error : null }));
+            // Display car details instead of cars list (then click return to view list)
+            //dispatch(carDetails(res.data._id, false));
 
-                  // Display car details instead of cars list (then click return to view list)
-                  dispatch(carDetails(res.data._id, false));
-                })
-                .catch (err => {
-                  dispatch(viewCar({ currentCar : null, error : err }));
-                });
+            // Upload car image
+            if (carImage !== null) {
+              const newCar = res.data;
+              var imageData = new FormData();
+              //imageData.append("carImage", carImage, carImage.name);
+              imageData.append('carImage', carImage, newCar._id);
+              return axios.post(burl + '/api/cars/image/' + newCar._id, imageData)
+                    .then (res => {
+
+                      // Update car image field
+                      //console.log(carImage);
+                      var updateCar = newCar;
+                      const imgExt = carImage.type.split('/')[1];
+                      updateCar.image = newCar._id + '.' + imgExt;
+                      return axios.put(burl + '/api/cars/' + updateCar._id, updateCar)
+                            .then (res => {
+                              dispatch(carDetails(res.data._id, false));
+                            })
+                            .catch (err => {
+                              dispatch(viewCar({ currentCar : res.data, error : err }));
+                            });
+                      })
+                      .catch (err => {
+                        dispatch(viewCar({ currentCar : newCarFromDb, error : 'Cannot upload image: use default!' }));
+                      });
+            } else {
+              dispatch(carDetails(res.data._id, false));
+            }
+
+          })
+          .catch (err => {
+            dispatch(viewCar({ currentCar : null, error : err }));
+          });
+
   };
 };
 
@@ -79,11 +110,41 @@ export function updateCar(payload) {
   return { type : UPDATE_CAR, payload };
 };
 */
-export function updateCarToDb(updatedCarData) {
+export function updateCarToDb(updatedCarData, carImage) {
   return (dispatch) => {
     return axios.put(burl + '/api/cars/' + updatedCarData._id, updatedCarData)
                 .then (res => {
-                  dispatch(carDetails(res.data._id, false));
+                  const updatedCarFromDb = res.data;
+
+                  // Update car image, if new one given by user
+                  if (carImage !== null) {
+
+                    // Delete old image
+                    const imageExt = '.' + carImage.type.split('/')[1];
+                    return axios.delete(burl + '/api/cars/image/' + res.data._id + '/' + imageExt)
+                      .then (res => {
+
+                        // Post new image
+                        var imageData = new FormData();
+                        imageData.append('carImage', carImage, res.data.carId);
+                        return axios.post(burl + '/api/cars/image/' + res.data.carId, imageData)
+                          .then (res => {
+
+                            // Finaly display car information
+                            dispatch(carDetails(res.data.carId, false));
+                          })
+                          .catch (err => {
+                            dispatch(viewCar({ currentCar : updatedCarFromDb, error : 'Error while updating image!' }));
+                          });
+                      })
+                      .catch (err => {
+                        dispatch(viewCar({ currentCar : updatedCarFromDb, error : 'Error while deleting old image!' }));
+                      });
+                  } else {
+
+                    // Else display new car information, with old image
+                    dispatch(carDetails(res.data._id, false));
+                  }
                 })
                 .catch (err => {
                   dispatch(viewCar({ currentCar : null, error : err }));

@@ -8,7 +8,8 @@ const carSchema = new mongoose.Schema({
   services : {
     type : Map,
     of : String
-  }
+  },
+  image : String
 });
 
 module.exports = mongoose.model('Car', carSchema);

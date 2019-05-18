@@ -39,6 +39,16 @@
   font-size: 20px;
 }
 
+.img-resize {
+  position: relative;
+  width: 100%;
+}
+
+.img-width-200 {
+  width: 200px;
+
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

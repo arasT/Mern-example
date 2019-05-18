@@ -7,8 +7,8 @@ import { fetchAllCars, saveCarToDb, updateCarToDb } from '../../actions/carActio
 const mapDispatchToProps = function(dispatch) {
   return {
     returnToList : () => dispatch(fetchAllCars()),
-    addCar : (newCar) => dispatch(saveCarToDb(newCar)),
-    updateCar : (updatedCarData) => dispatch(updateCarToDb(updatedCarData))
+    addCar : (newCar, carImage) => dispatch(saveCarToDb(newCar, carImage)),
+    updateCar : (updatedCarData, carImage) => dispatch(updateCarToDb(updatedCarData, carImage))
   };
 };
 

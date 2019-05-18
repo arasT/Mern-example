@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 import uuidv1 from 'uuid';
 import NotificationSystem from 'react-notification-system';
 
+import '../../App.css';
+
+import { serverHost } from '../../config';
+const imageUrl = 'http://' + serverHost.ip + ':' + serverHost.port + '/images/';
+
 class CarView extends Component {
 
   constructor(props) {
@@ -52,6 +57,8 @@ class CarView extends Component {
   }
 
   render() {
+    const imageName = this.car.image.length > 0 ? this.car.image : 'default-img.jpg';
+    const imagePath = imageUrl + imageName;
     return (
       <div className="row">
 
@@ -68,49 +75,68 @@ class CarView extends Component {
             <div className="panel-body">
 
               {this.car && (
-                <table className="table">
-                  <tbody>
-                    <tr>
-                      <td><strong>Title</strong></td>
-                      <td>{ this.car.title }</td>
-                    </tr>
-                    <tr>
-                      <td><strong>Brand</strong></td>
-                      <td>{ this.car.brand }</td>
-                    </tr>
-                    <tr>
-                      <td><strong>Price</strong></td>
-                      <td>{ this.car.price }</td>
-                    </tr>
-                    <tr>
-                      <td><strong>Age</strong></td>
-                      <td>{ this.car.age }</td>
-                    </tr>
-                    <tr>
-                      <td colSpan="2" className="font-20">Services</td>
-                    </tr>
 
-                    { this.displayServices() }
+                <div className="row">
 
-                  </tbody>
-                </table>
-              )}
+                  <div className="col-md-6">
+                    <img className="img-rounded img-resize"
+                      alt="Display Car"
+                      src={ `${imagePath}?${Date.now()}` }
+                    />
+                  </div>
 
-              <button type="button" className="btn btn-default"
-                onClick = { () => this.handleReturnClick() }
-              >
-                <span className="glyphicon glyphicon-backward"> Car List</span>
-              </button>
+                  <div className="col-md-6">
+                    <table className="table">
+                      <tbody>
+                        <tr>
+                          <td><strong>Title</strong></td>
+                          <td>{ this.car.title }</td>
+                        </tr>
+                        <tr>
+                          <td><strong>Brand</strong></td>
+                          <td>{ this.car.brand }</td>
+                        </tr>
+                        <tr>
+                          <td><strong>Price</strong></td>
+                          <td>{ this.car.price }</td>
+                        </tr>
+                        <tr>
+                          <td><strong>Age</strong></td>
+                          <td>{ this.car.age }</td>
+                        </tr>
+                        <tr>
+                          <td colSpan="2" className="font-20">Services</td>
+                        </tr>
 
-              {this.car && (
-                <div className="pull-right">
-                  <button type="button" className="btn btn-success"
-                    onClick = { () => this.handleEditClick(this.car._id) }
-                  >
-                    <span className="glyphicon glyphicon-pencil"> Edit </span>
-                  </button>
+                        { this.displayServices() }
+
+                      </tbody>
+                    </table>
+                  </div>
+
                 </div>
               )}
+
+              <div className="row padding-top-10">
+                <div className="col-md-12">
+                  <button type="button" className="btn btn-default"
+                    onClick = { () => this.handleReturnClick() }
+                  >
+                    <span className="glyphicon glyphicon-backward"> Car List</span>
+                  </button>
+
+                  {this.car && (
+                    <div className="pull-right">
+                      <button type="button" className="btn btn-success"
+                        onClick = { () => this.handleEditClick(this.car._id) }
+                      >
+                        <span className="glyphicon glyphicon-pencil"> Edit </span>
+                      </button>
+                    </div>
+                  )}
+
+                </div>
+              </div>
 
             </div>
 

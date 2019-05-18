@@ -48,8 +48,8 @@ It will open a browser and display the home page at: http://localhost:3000.
 
 Miscellanous
 ----
-* Backend server use port 3001 by default, you can change it into *./back/src/config/index.js* file.
-* Frontend server use port 3000 by default, you can change it into *./front/src/config/index.js* file.
+* Backend server use port 3001 by default, you can change it into *./back/src/config/index.js* file then adjust *./front/src/config/index.js* file.
+* Frontend server use port 3000.
 * Other usefull tools: [Postman](https://www.getpostman.com/), [Mongo-express](https://www.npmjs.com/package/mongo-express).
 
 License

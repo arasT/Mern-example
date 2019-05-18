@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import uuidv1 from 'uuid';
 
+import { serverHost } from '../../config';
+const imageUrl = 'http://' + serverHost.ip + ':' + serverHost.port + '/images/';
+
+
 class CarAdd extends Component {
   constructor(props) {
     super(props);
     const { ...carData } = this.props.carData;
     this.isEdit = carData.title ? true : false;
-    
+
     if (this.isEdit) {
       this.state = carData;
       this.state.servicesList = this.populateServices(carData.services);
@@ -17,6 +21,7 @@ class CarAdd extends Component {
         'brand' : '',
         'age' : 0,
         'price' : '',
+        'image' : '',
         'services' : {},
         'servicesList' : []
       };
@@ -26,9 +31,13 @@ class CarAdd extends Component {
     this.state.carErrors = {
       'title' : '',
       'brand' : '',
-      'age' : 0,
-      'price' : ''
+      'age' : '',
+      'price' : '',
+      'image' : ''
     };
+
+    // Add image field
+    this.state.carImage = null;
 
   }
 
@@ -67,17 +76,29 @@ class CarAdd extends Component {
     switch (id) {
       case 'brand':
         carErrors.brand = value.length < 3 ? ' * Must be at least 3 characters!' : '';
+        this.setState({ ...this.state, brand : value  });
         break;
       case 'title':
         carErrors.title = value.length < 2 ? ' * Must be at least 2 characters!' : '';
+        this.setState({ ...this.state, title : value  });
         break;
       case 'price':
         carErrors.price = isNaN(parseFloat(value)) ? ' * Must be a number or float!' : '';
+        this.setState({ ...this.state, price : value  });
+        break;
+      case 'age':
+        carErrors.age = isNaN(parseInt(value)) ? ' * Must be a number!' : '';
+        this.setState({ ...this.state, age : parseInt(value) });
         break;
       default:
-        carErrors.age = isNaN(parseFloat(value)) ? ' * Must be a number!' : '';
+        carErrors.image = value.name.match(/\.(jpg|jpeg|png|gif)$/) ? '' : ' * Must be a regular image file!';
+        if (carErrors.image.length === 0) {
+          this.setState({ ...this.state, carImage : value });
+        }
     }
-    this.setState({ carErrors, [id] : value });
+
+    this.setState({ carErrors });
+    //this.setState({ carErrors, [id] : value });
   }
 
   handleClick() {
@@ -169,19 +190,30 @@ class CarAdd extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    var newCar = this.state;
-    newCar.age = parseInt(newCar.age);
+    var newCar = {};
+    const car = this.state;
+    newCar.title = car.title;
+    newCar.brand = car.brand;
+    newCar.price = car.price;
+    newCar.age = car.age;
+    newCar.image = car.image;
     newCar.services = this.getServices();
 
     // Edit / update
     if (this.isEdit) {
       newCar._id = this.props.carData._id;
       newCar.__v = this.props.carData.__v;
-      this.props.updateCar(newCar);
+
+      if (car.carImage) {
+        const imageExt = car.carImage.type.split('/')[1];
+        newCar.image = this.props.carData._id + '.' + imageExt;
+      }
+
+      this.props.updateCar(newCar, car.carImage);
       return;
     }
 
-    this.props.addCar(newCar);
+    this.props.addCar(newCar, car.carImage);
   }
 
   getServices() {
@@ -200,6 +232,8 @@ class CarAdd extends Component {
 
   render () {
     const cars = this.state;
+    const imageName = cars.image.length > 0 ? cars.image : 'default-img.jpg';
+    const imagePath = imageUrl + imageName;
     return (
       <div className="row">
 
@@ -210,6 +244,23 @@ class CarAdd extends Component {
 
             <div className="panel-body">
               <form onSubmit = { (e) => this.handleSubmit(e) }>
+
+                <div className="form-group col-md-6">
+                  <label htmlFor="imageForm"> Image
+                    {cars.carErrors.image.length > 0 &&
+                      <small className="text-danger">{ cars.carErrors.image }</small>
+                    }
+                  </label>
+                  <input type="file" id="imageForm"
+                    onChange = { (e) => this.handleChange(e.target.id, e.target.files[0]) }
+                  />
+                </div>
+                <div className="form-group col-md-6">
+                  <img className="img-rounded img-width-200"
+                    alt="Display Car"
+                    src={ `${imagePath}?${Date.now()}` }
+                  />
+                </div>
 
                 <div className="form-group col-md-6">
                   <label htmlFor="brand"> Brand

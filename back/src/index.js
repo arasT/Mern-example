@@ -6,6 +6,9 @@ const app = express();
 
 const dbServer = require('./config');
 
+// Serve static files (images, css, js, ...)
+app.use(express.static('public'));
+
 // Parse requests
 app.use(bodyParser.urlencoded({ extended : false }));
 app.use(bodyParser.json());
