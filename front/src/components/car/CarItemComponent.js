@@ -28,12 +28,14 @@ class CarItem extends Component {
 
   listStyle(data) {
     return (
-      <div className="col-md-12" >
-        <h5>
-          { data.brand } { data.title } : <small> { data.price } $</small>
+      <div className="col-md-12 list_link"  >
+        <div className="col-md-9 padding-top-10"
+          onClick = { () => this.handleClick(VIEW_CAR, data._id) } >
+            { data.brand } { data.title } : <small className="text-muted"> { data.price } $</small>
+        </div>
 
-          <div className="pull-right">
-            <div className="btn-group btn-group-xs">
+          <div className="col-md-3 padding-top-10 padding-bottom-10">
+            <div className="btn-group btn-group-xs pull-right">
               <button type="button" className="btn btn-default"
                 onClick = { () => this.handleClick(VIEW_CAR, data._id) }
               >
@@ -57,7 +59,7 @@ class CarItem extends Component {
             </div>
           </div>
 
-        </h5>
+
       </div>
     );
   }
@@ -68,9 +70,12 @@ class CarItem extends Component {
     return (
       <div>
         <div className="col-xs-3 margin-10">
-          <img className="img-resize img-rounded"
-            alt={ data.brand + data.title }
-            src={ `${imagePath}?${Date.now()}` } />
+          <button className="btn btn-default">
+            <img className="img-resize img-rounded"
+              alt={ data.brand + data.title }
+              onClick = { () => this.handleClick(VIEW_CAR, data._id) }
+              src={ `${imagePath}?${Date.now()}` } />
+          </button>
 
             <center>
               <p> { data.brand } { data.title } :

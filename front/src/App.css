@@ -52,6 +52,11 @@
   width: 200px;
 }
 
+.list_link:hover {
+  cursor: pointer;
+  background: #f7f4f4;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
