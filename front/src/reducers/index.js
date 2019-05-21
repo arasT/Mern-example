@@ -1,8 +1,11 @@
 import { combineReducers } from 'redux';
-import carReducer from '../reducers/carReducer';
+
+import carReducer from './carReducer';
+import listReducer from './listReducer';
 
 const appReducer = combineReducers({
-  carRdc : carReducer
+  carRdc : carReducer,
+  listRdc : listReducer
 });
 
 export default appReducer;

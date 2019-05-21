@@ -3,6 +3,12 @@ import { connect } from 'react-redux';
 import { deleteCar, carDetails } from '../../actions/carActions';
 import CarItem from '../../components/car/CarItemComponent';
 
+const matStateToProps = state => {
+  return {
+    carStyle : state.listRdc.style
+  };
+};
+
 const mapDispatchToProps = function(dispatch) {
   return {
     deleteCar : (carId) => dispatch(deleteCar(carId)),
@@ -11,4 +17,4 @@ const mapDispatchToProps = function(dispatch) {
   };
 };
 
-export default connect(null, mapDispatchToProps)(CarItem);
+export default connect(matStateToProps, mapDispatchToProps)(CarItem);

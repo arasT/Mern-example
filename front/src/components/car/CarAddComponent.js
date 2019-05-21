@@ -192,9 +192,9 @@ class CarAdd extends Component {
     e.preventDefault();
     var newCar = {};
     const car = this.state;
-    newCar.title = car.title;
-    newCar.brand = car.brand;
-    newCar.price = car.price;
+    newCar.title = car.title.length > 0 ? car.title : 'unknown';
+    newCar.brand = car.brand.length > 0 ? car.brand : 'unknown';
+    newCar.price = car.price.length > 0 ? car.price : '0';
     newCar.age = car.age;
     newCar.image = car.image;
     newCar.services = this.getServices();

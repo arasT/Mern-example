@@ -57,6 +57,12 @@ class CarView extends Component {
   }
 
   render() {
+
+    // Database connection error
+    if (!this.car) {
+      return ( <NotificationSystem ref = { this.notificationSystem } /> );
+    }
+
     const imageName = this.car.image.length > 0 ? this.car.image : 'default-img.jpg';
     const imagePath = imageUrl + imageName;
     return (

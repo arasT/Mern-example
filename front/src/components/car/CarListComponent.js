@@ -41,43 +41,28 @@ class CarList extends Component {
 
         <NotificationSystem ref={ this.notificationSystem } />
 
-        <div className="col-md-12">
-          <div className="panel panel-primary">
+        <h3 className="page-header"> Cars List </h3>
 
-            <div className="panel-heading">
-                <span className="glyphicon glyphicon-list"></span>
-                <span className="font-20"> Car Lists</span>
+        <div className="row">
+          {
+            carList.map(car => <CarItem key = { car._id } itemData = { car } />)
+          }
+        </div>
+
+        <hr />
+        <div className="row">
+          <div className="col-md-12">
+            <span className="font-20">Total : { this.props.cars ? this.props.cars.length : 0 }</span>
+            <div className="pull-right">
+              <button type="button" className="btn btn-primary"
+                onClick = { () => this.handleClick() }
+              >
+                <span className="glyphicon glyphicon-plus"> Add</span>
+              </button>
             </div>
-
-            <div className="panel-body">
-              <ul className="list-group">
-                <li className="list-group-item">
-
-                  {
-                    carList.map(car => <CarItem key = { car._id } itemData = { car } />)
-                  }
-
-                </li>
-              </ul>
-            </div>
-
-            <div className="panel-footer">
-              <div className="row">
-                <div className="col-md-12">
-                  <span className="font-20">Total : { this.props.cars ? this.props.cars.length : 0 }</span>
-                  <div className="pull-right">
-                    <button type="button" className="btn btn-primary"
-                      onClick = { () => this.handleClick() }
-                    >
-                      <span className="glyphicon glyphicon-plus"> Add</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
           </div>
         </div>
+
       </div>
     );
   };

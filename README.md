@@ -14,8 +14,8 @@ How to install
 
 This app is based on [Node.js](http://nodejs.org/).
 [MongoDB](https://www.mongodb.com/) is used as database, so make sure that it is installed and running on your system.
-- For backend part, it uses: [Express](https://expressjs.com/) and [Mongoose](https://mongoosejs.com/).
-- And for front end, it uses: [React](https://reactjs.org/), [Redux](https://redux.js.org/), [Axios](https://github.com/axios/axios) and [Redux-thunk](https://github.com/reduxjs/redux-thunk), [React-notification-system](https://www.npmjs.com/package/react-notification-system), and [Bootstrap](https://getbootstrap.com/) v3.4.1.
+- For backend part, it uses: [Express](https://expressjs.com/), [Multer](https://www.npmjs.com/package/multer) and [Mongoose](https://mongoosejs.com/).
+- And for front end, it uses: [React](https://reactjs.org/), [Redux](https://redux.js.org/), [Axios](https://github.com/axios/axios) and [Redux-thunk](https://github.com/reduxjs/redux-thunk), [React-notification-system](https://www.npmjs.com/package/react-notification-system), [react-confirm-alert](https://www.npmjs.com/package/react-confirm-alert), and [Bootstrap](https://getbootstrap.com/) v3.4.1.
 
 Clone or Download this repository.
 ```

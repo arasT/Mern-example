@@ -52,8 +52,10 @@ function carReducer (state = initialState, action) {
         ...state,
         viewToDisplay : LIST_CAR,
         cars : action.payload.cars, error : errorToDisplays };
-    default:
+    case HOME_CAR:
       return { ...state, viewToDisplay : HOME_CAR };
+    default:
+      return state;
   }
 }
 
